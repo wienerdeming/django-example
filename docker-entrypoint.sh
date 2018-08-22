@@ -17,7 +17,7 @@ chmod 775 -R $PROJECT_DIR
 chown app:app -R $PROJECT_DIR
 
 # Test
-if [[ $DJANGO_SETTINGS_MODULE == 'gsone.settings_test' ]]; then
+if [[ $DJANGO_SETTINGS_MODULE == 'config.settings_test' ]]; then
     echo "Run testing mode"
 
     # Run test
