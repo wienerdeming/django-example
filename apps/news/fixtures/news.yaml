@@ -1,0 +1,61 @@
+-
+    model: "news.News"
+    pk: 1
+    fields:
+      title: "News title 1"
+      desc: "News desc 1"
+      content: "News content 1"
+      author: 1
+      is_active: True
+      published_date: "2018-01-01T00:00:00+00:00"
+      modified_date: "2018-01-01T00:00:00+00:00"
+      created_date: "2018-01-01T00:00:00+00:00"
+-
+    model: "news.News"
+    pk: 2
+    fields:
+      title: "News title 2"
+      desc: "News desc 2"
+      content: "News content 2"
+      author: 1
+      is_active: True
+      published_date: "2018-01-01T00:00:00+00:00"
+      modified_date: "2018-01-01T00:00:00+00:00"
+      created_date: "2018-01-01T00:00:00+00:00"
+-
+    model: "news.News"
+    pk: 3
+    fields:
+      title: "News title 3"
+      desc: "News desc 3"
+      content: "News content 3"
+      author: 1
+      is_active: False
+      published_date: "2018-01-01T00:00:00+00:00"
+      modified_date: "2018-01-01T00:00:00+00:00"
+      created_date: "2018-01-01T00:00:00+00:00"
+-
+    model: "news.News"
+    pk: 4
+    fields:
+      title: "News title 4"
+      desc: "News desc 4"
+      content: "News content 4"
+      author: 1
+      is_active: True
+      published_date: "2018-01-03T00:00:00+00:00"
+      modified_date: "2018-01-02T00:00:00+00:00"
+      created_date: "2018-01-02T00:00:00+00:00"
+-
+    model: "news.News"
+    pk: 5
+    fields:
+      title: "News title 5"
+      desc: "News desc 5"
+      content: "News content 5"
+      author: 1
+      is_active: True
+      is_deleted: True
+      published_date: "2018-01-01T00:00:00+00:00"
+      modified_date: "2018-01-01T00:00:00+00:00"
+      created_date: "2018-01-01T00:00:00+00:00"

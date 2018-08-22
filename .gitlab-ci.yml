@@ -1,0 +1,50 @@
+before_script:
+  - "export PATH=$PATH:/usr/local/bin"
+  - "export PROJECT_DIR=/var/www/gs1_api"
+  - "export BUILD_DIR=~/gs1_api"
+
+  # Information
+  - "whoami"
+  - "echo \"Current location:\" `pwd`"
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    # Clear old source
+    - "rm -rf ${BUILD_DIR}"
+    # Copy project
+    - "mkdir ${BUILD_DIR}"
+    - "cp -r `pwd`/. ${BUILD_DIR}/"
+    - "cd $BUILD_DIR"
+    # Start build
+    - "docker-compose -f docker-compose.test.yml build"
+  tags:
+    - staging
+
+test:
+  stage: test
+  script:
+    - "cd $BUILD_DIR"
+    - "docker-compose -f docker-compose.test.yml run web"
+  tags:
+    - staging
+
+deploy:
+  stage: deploy
+  script:
+    - "cd ${PROJECT_DIR}"
+    - "cp -R ${BUILD_DIR}/docker-compose.yml ./"
+    ## Stop application
+    - "docker-compose -f docker-compose.yml down"
+    ## Start application
+    - "docker-compose -f docker-compose.yml up -d"
+  only:
+    - master
+  tags:
+    - staging
+

@@ -1,0 +1,47 @@
+-
+    model: "gauth.User"
+    pk: 1
+    fields:
+      username: "test1@example.com"
+      last_name: "Sparrow"
+      first_name: "Jack"
+      password: "pbkdf2_sha256$100000$sjDSZHUAvGkm$qX1hn8xwNLGAMZTlrWBCjiNron7qstAyA6foULZ7ZYI="
+      is_superuser: True
+      modified_date: "2017-01-01T00:00:00+00:00"
+      created_date: "2017-01-01T00:00:00+00:00"
+-
+    model: "gauth.User"
+    pk: 2
+    fields:
+      # Don't add any permission for this user
+      username: "test2@example.com"
+      last_name: "The Ripper"
+      first_name: "Jack"
+      password: "pbkdf2_sha256$30000$rirjQwUOYtl8$EB8NuU4D9x005OMLkCZ9NsTX9TpZ3oQLjsg9gPqIc2Q="
+      is_superuser: False
+      modified_date: "2017-01-01T00:00:00+00:00"
+      created_date: "2017-01-01T00:00:00+00:00"
+-
+    model: "gauth.User"
+    pk: 3
+    fields:
+      username: "test3@example.com"
+      last_name: "The Bean Tree"
+      first_name: "Jack"
+      password: "pbkdf2_sha256$30000$rirjQwUOYtl8$EB8NuU4D9x005OMLkCZ9NsTX9TpZ3oQLjsg9gPqIc2Q="
+      is_superuser: False
+      is_active: False
+      modified_date: "2017-01-01T00:00:00+00:00"
+      created_date: "2017-01-01T00:00:00+00:00"
+-
+    model: "gauth.User"
+    pk: 4
+    fields:
+      username: "test4@example.com"
+      last_name: "The Frost"
+      first_name: "Jack"
+      password: "pbkdf2_sha256$30000$rirjQwUOYtl8$EB8NuU4D9x005OMLkCZ9NsTX9TpZ3oQLjsg9gPqIc2Q="
+      is_superuser: False
+      is_active: True
+      modified_date: "2017-01-01T00:00:00+00:00"
+      created_date: "2017-01-01T00:00:00+00:00"

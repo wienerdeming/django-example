@@ -1,0 +1,24 @@
+#################
+# History 1
+################
+-
+  model: "shared.History"
+  pk: 1
+  fields:
+    user: 1
+    content_type: 7
+    object_id: 1
+    text: 'Hiiiiiiiiiiii'
+    created_date: "2017-01-01T00:00:00+00:00"
+#################
+# History 2
+################
+-
+  model: "shared.History"
+  pk: 2
+  fields:
+    user: 1
+    content_type: 7
+    object_id: 1
+    text: 'Hellllooooooooo'
+    created_date: "2017-01-01T00:00:00+00:00"
