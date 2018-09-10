@@ -1,12 +1,6 @@
 version: "3"
 
 services:
-  # Redis
-  redis:
-    image: redis
-    ports:
-      - "6379:6379"
-
   # Postgres
   postgres:
     restart: always
@@ -24,14 +18,12 @@ services:
     build: .
     links:
       - postgres:postgres
-      - redis:redis
     ports:
       - "8000:8000"
     volumes:
       - ./media:/var/www/gs1_api/media
     depends_on:
       - postgres
-      - redis
 
 volumes:
   pgdata:
