@@ -1,10 +1,8 @@
 #!/bin/sh
 set -e
 
-export PROJECT_DIR=/var/www/gs1_api/
-
 # Go to directory
-cd $PROJECT_DIR
+cd $PROJECT_PATH
 
 # Activate virtualenv
 source .venv/bin/activate
@@ -13,8 +11,8 @@ source .venv/bin/activate
 python manage.py collectstatic --noinput
 
 # Change permission
-chmod 775 -R $PROJECT_DIR
-chown app:app -R $PROJECT_DIR
+chmod 775 -R $PROJECT_PATH
+chown app:app -R $PROJECT_PATH
 
 # Test
 if [[ $DJANGO_SETTINGS_MODULE == 'config.settings_test' ]]; then
@@ -30,6 +28,7 @@ else
     gosu app python manage.py migrate
 
     # Run project
-    exec gosu app gunicorn gsone.wsgi -b 0.0.0.0:8000
+    exec gosu app gunicorn config.wsgi -b 0.0.0.0:8000
     exit
 fi
+

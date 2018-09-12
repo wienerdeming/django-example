@@ -1,50 +1,47 @@
-before_script:
-  - "export PATH=$PATH:/usr/local/bin"
-  - "export PROJECT_DIR=/var/www/gs1_api"
-  - "export BUILD_DIR=~/gs1_api"
+image: docker:stable
 
-  # Information
-  - "whoami"
-  - "echo \"Current location:\" `pwd`"
+variables:
+  DOCKER_REGISTRY: lab.wienerdeming.com:4567
+  CONTAINER_RELEASE_IMAGE: $DOCKER_REGISTRY/my_group/my_project
+
+before_script:
+  - docker info
+  - apk add --no-cache py-pip
+  - pip install docker-compose
+  - "echo Current location is: `pwd`"
+  - docker info
+  - docker-compose --version
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY
 
 stages:
-  - build
-  - test
-  - deploy
+- build
+- test
+- deploy
 
 build:
   stage: build
   script:
-    # Clear old source
-    - "rm -rf ${BUILD_DIR}"
-    # Copy project
-    - "mkdir ${BUILD_DIR}"
-    - "cp -r `pwd`/. ${BUILD_DIR}/"
-    - "cd $BUILD_DIR"
-    # Start build
-    - "docker-compose -f docker-compose.test.yml build"
+    - docker build -t $CONTAINER_RELEASE_IMAGE .
+    - docker push $CONTAINER_RELEASE_IMAGE:latest
   tags:
-    - staging
+    - dev
 
 test:
   stage: test
   script:
-    - "cd $BUILD_DIR"
-    - "docker-compose -f docker-compose.test.yml run web"
+    - docker-compose rm -f
+    - docker pull $CONTAINER_RELEASE_IMAGE
+    - docker-compose -f docker-compose.test.yml run web
   tags:
-    - staging
+    - dev
 
 deploy:
   stage: deploy
   script:
-    - "cd ${PROJECT_DIR}"
-    - "cp -R ${BUILD_DIR}/docker-compose.yml ./"
-    ## Stop application
-    - "docker-compose -f docker-compose.yml down"
-    ## Start application
-    - "docker-compose -f docker-compose.yml up -d"
+    - docker pull $CONTAINER_RELEASE_IMAGE
+    - docker-compose down
+    - docker-compose -p my_app up -d
   only:
     - master
   tags:
-    - staging
-
+    - dev

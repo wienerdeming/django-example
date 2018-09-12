@@ -6,22 +6,20 @@ services:
     restart: always
     image: postgres:latest
     ports:
-      - "5432:5432"
+    - 5432
 
   # App
   web:
     build: .
     environment:
-      - DJANGO_SETTINGS_MODULE=config.settings_test
-      - DATABASE_HOST=postgres
-      - DATABASE_NAME=postgres
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=
+    - DJANGO_SETTINGS_MODULE=config.settings_test
+    - DATABASE_HOST=postgres
+    - DATABASE_NAME=test
+    - DATABASE_USER=postgres
+    - DATABASE_PASSWORD=
+    image: $CONTAINER_RELEASE_IMAGE:latest
     links:
-      - postgres:postgres
+    - postgres:postgres
     depends_on:
-      - postgres
+    - postgres
 
-volumes:
-  pgdata:
-  web:
