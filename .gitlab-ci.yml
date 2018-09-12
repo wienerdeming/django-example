@@ -2,13 +2,13 @@ image: docker:stable
 
 variables:
   DOCKER_REGISTRY: registry.gitlab.com
-  CONTAINER_RELEASE_IMAGE: $DOCKER_REGISTRY/my_group/my_project
+  CONTAINER_RELEASE_IMAGE: $DOCKER_REGISTRY/my_group/my_project:latest
+  CONTAINER_TEST_IMAGE: $DOCKER_REGISTRY/my_group/my_project:$CI_COMMIT_REF_SLUG
 
 before_script:
   - docker info
   - apk add --no-cache py-pip
   - pip install docker-compose
-  - "echo Current location is: `pwd`"
   - docker info
   - docker-compose --version
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY
@@ -21,16 +21,15 @@ stages:
 build:
   stage: build
   script:
-    - docker build -t $CONTAINER_RELEASE_IMAGE .
-    - docker push $CONTAINER_RELEASE_IMAGE:latest
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
   tags:
     - dev
 
 test:
   stage: test
   script:
-    - docker-compose rm -f
-    - docker pull $CONTAINER_RELEASE_IMAGE
+    - docker pull $CONTAINER_TEST_IMAGE
     - docker-compose -f docker-compose.test.yml run web
   tags:
     - dev
@@ -38,9 +37,11 @@ test:
 deploy:
   stage: deploy
   script:
-    - docker pull $CONTAINER_RELEASE_IMAGE
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
     - docker-compose down
-    - docker-compose -p my_app up -d
+    - docker-compose -p myapp up -d
   only:
     - master
   tags:

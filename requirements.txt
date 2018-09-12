@@ -1,4 +1,3 @@
-celery==4.2.1
 Django==2.0.7
 django-cors-headers==2.4.0
 django-filter==2.0.0
@@ -9,3 +8,4 @@ coreapi==2.3.3
 PyYAML==3.12
 psycopg2-binary==2.7.5
 gunicorn==19.7.1
+pycodestyle

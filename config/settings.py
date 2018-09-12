@@ -118,7 +118,6 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 AUTH_USER_MODEL = 'gauth.User'
-COMPANY_MODEL = 'company.Company'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

@@ -23,6 +23,9 @@ if [[ $DJANGO_SETTINGS_MODULE == 'config.settings_test' ]]; then
     exit
 else
     echo "Run production mode"
+    echo DATABASE_HOST:$DATABASE_HOST
+    echo DATABASE_HOST:$DATABASE_NAME
+    echo DATABASE_HOST:$DATABASE_USER
 
     # Run migration
     gosu app python manage.py migrate
@@ -31,4 +34,3 @@ else
     exec gosu app gunicorn config.wsgi -b 0.0.0.0:8000
     exit
 fi
-

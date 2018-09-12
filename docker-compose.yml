@@ -1,31 +1,25 @@
 version: '3'
 
 services:
-
   postgres:
     restart: always
     image: postgres:latest
     ports:
     - 5432
     volumes:
-    - "/var/lib/postgresql/data/pgdata:/var/lib/postgresql/data"
+    - "/web/myapp-database:/var/lib/postgresql/data"
 
   web:
-    environment:
-    - DJANGO_SETTINGS_MODULE=config.settings_pro
-    - SECRET_KEY=912
-    - DATABASE_HOST=postgres
-    - DATABASE_NAME=humo
-    - DATABASE_USER=humo
-    - DATABASE_PASSWORD=912
     restart: always
     env_file:
-    - .env
-    image: $CONTAINER_RELEASE_IMAGE:latest
+    - /conf/.env
+    image: $CONTAINER_RELEASE_IMAGE
     links:
     - postgres:postgres
     ports:
     - "8000:8000"
     depends_on:
     - postgres
-
+    volumes:
+      - "/web/myapp-data:/data"
+      - "/web/myapp-conf:/conf"

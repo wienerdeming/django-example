@@ -38,7 +38,6 @@ DATABASES = {
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 EMAIL_FROM = 'info@localhost'
 
-# Celery settings
+# Run celery on sync mode for testing
 CELERY_TASK_ALWAYS_EAGER = True
-
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
