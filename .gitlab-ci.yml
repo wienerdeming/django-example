@@ -1,7 +1,7 @@
 image: docker:stable
 
 variables:
-  DOCKER_REGISTRY: lab.wienerdeming.com:4567
+  DOCKER_REGISTRY: registry.gitlab.com
   CONTAINER_RELEASE_IMAGE: $DOCKER_REGISTRY/my_group/my_project
 
 before_script:
