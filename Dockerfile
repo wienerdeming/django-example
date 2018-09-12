@@ -1,6 +1,7 @@
 FROM centos
 
-ENV PROJECT_NAME django-example
+ENV PROJECT_NAME my_project_name
+ENV PROJECT_PATH /var/www/$PROJECT_NAME
 
 ##############################
 # Install dependency
@@ -47,13 +48,13 @@ RUN set -ex; \
 ######################################
 # Setting Project
 ######################################
-RUN mkdir -p /var/www/$PROJECT_NAME
+RUN mkdir -p $PROJECT_PATH
 
 # Cd to working directory
-WORKDIR /var/www/$PROJECT_NAME
+WORKDIR $PROJECT_PATH
 
 # Copy requirements for catch
-ADD ./requirements.txt /var/www/$PROJECT_NAME
+ADD ./requirements.txt $PROJECT_PATH
 
 # Create virtualenv
 RUN pip3 install virtualenv
@@ -66,15 +67,16 @@ RUN virtualenv .venv
 RUN source .venv/bin/activate && pip3 install -r requirements.txt
 
 # Copy project files
-COPY --chown=app . /var/www/$PROJECT_NAME
+COPY --chown=app . $PROJECT_PATH
 
-VOLUME /var/www/$PROJECT_NAME/media
-VOLUME /var/www/$PROJECT_NAME/static
+VOLUME $PROJECT_PATH/media
+VOLUME $PROJECT_PATH/static
 
 # Permission project directory
-RUN chmod -R 775 /var/www/$PROJECT_NAME
+RUN chmod -R 775 $PROJECT_PATH
 
 # Copy entrypoint script to root directory
 COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
